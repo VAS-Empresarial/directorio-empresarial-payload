@@ -37,13 +37,18 @@ const Categories: CollectionConfig = {
 	},
 	{
 		name: 'icon',
-		label: {
-			singular: 'Ícono',
-			plural: 'Íconos'
-		},
+		label: 'Ícono',
 		type: 'select',
 		options: iconOptions,
 		required: true,
+	},
+	{
+		name: 'displayOrder',
+		label: 'Orden de visualización',
+		type: 'number',
+		required: true,
+		unique: true,
+		min: 1,
 	},
   ],
 };

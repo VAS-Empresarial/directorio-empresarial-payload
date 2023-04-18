@@ -7,7 +7,7 @@ import Businesses from './collections/Businesses';
 import Media from './collections/Media';
 
 export default buildConfig({
-	serverURL: process.env.URL,
+	serverURL: process.env.SERVER_URL,
 	admin: {
 		user: Users.slug,
 	},
@@ -17,6 +17,9 @@ export default buildConfig({
 		Services,
 		Businesses,
 		Media,
+	],
+	cors: [ // URLS to allow CORS requests from
+		process.env.CLIENT_URL || '',
 	],
 	typescript: {
 		outputFile: path.resolve(__dirname, 'payload-types.ts'),
