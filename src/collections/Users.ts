@@ -4,6 +4,10 @@ import { roleOptions, UserRole } from '../roles';
 
 const Users: CollectionConfig = {
   slug: 'users',
+  labels: {
+	singular: 'Usuario',
+	plural: 'Usuarios'
+  },
   auth: true,
   admin: {
     useAsTitle: 'email',
