@@ -141,6 +141,9 @@ build
 # SvelteKit build / generate output
 .svelte-kit
 
+# Visual Studio
+.vs
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
