@@ -1,22 +1,22 @@
 import { buildConfig } from 'payload/config';
 import path from 'path';
-import Users from './collections/Users';
-import Categories from './collections/Categories';
-import Services from './collections/Services';
-import Businesses from './collections/Businesses';
-import Media from './collections/Media';
+import UserCollection from './collections/Users';
+import CategoryCollection from './collections/Categories';
+import ServiceCollection from './collections/Services';
+import BusinessCollection from './collections/Businesses';
+import MediaCollection from './collections/Media';
 
 export default buildConfig({
 	serverURL: process.env.SERVER_URL,
 	admin: {
-		user: Users.slug,
+		user: UserCollection.slug,
 	},
 	collections: [
-		Users,
-		Categories,
-		Services,
-		Businesses,
-		Media,
+		UserCollection,
+		CategoryCollection,
+		ServiceCollection,
+		BusinessCollection,
+		MediaCollection,
 	],
 	cors: [ // URLS to allow CORS requests from
 		process.env.CLIENT_URL || '',
@@ -28,4 +28,5 @@ export default buildConfig({
 		//schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
 		disable: true,
 	},
+	debug: true,
 });

@@ -1,19 +1,18 @@
 import { CollectionConfig } from 'payload/types';
-import { isAdmin } from '../access';
 
-const Media: CollectionConfig = {
+const MediaCollection: CollectionConfig = {
 	slug: 'media',
 	labels: {
 		singular: "Imagen",
 		plural: "Librería Multimedia"
 	},
 	access: {
-	  read: () => true,
+		read: () => true,
 	},
 	upload: {
 		staticURL: '/media',
-    	staticDir: 'media',
-    	imageSizes: [
+		staticDir: 'media',
+		imageSizes: [
 			{
 				name: 'thumbnail',
 				width: 150,
@@ -37,4 +36,4 @@ const Media: CollectionConfig = {
 	fields: [],
 };
 
-export default Media;
+export default MediaCollection;
