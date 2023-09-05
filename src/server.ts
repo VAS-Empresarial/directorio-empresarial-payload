@@ -1,6 +1,5 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import payload from 'payload';
-import { hompageRoute } from './homepage-route';
 
 require('dotenv').config();
 const app = express();
@@ -9,9 +8,6 @@ const app = express();
 app.get('/', (_, res) => {
 	res.redirect('/admin');
 });
-
-// Homepage data route
-app.get('/api/homepage', hompageRoute);
 
 const start = async () => {
 

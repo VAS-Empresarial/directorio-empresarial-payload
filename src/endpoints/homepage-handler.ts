@@ -1,11 +1,12 @@
 import payload from "payload";
+import { PayloadHandler } from "payload/config";
 import { Request, Response } from "express";
-import BusinessCollection from "./collections/Businesses";
+import BusinessCollection from "../collections/Businesses";
 
 /**
  * Custom route to get all the required data for the Homepage.
  */
-export const hompageRoute = async (request: Request, response: Response) => {
+export const hompageHandler: PayloadHandler = async (request: Request, response: Response) => {
 	const businessModel = payload.collections[BusinessCollection.slug].Model;
 
 	const aggregationPipeline = await businessModel.aggregate([

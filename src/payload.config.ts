@@ -5,6 +5,7 @@ import CategoryCollection from './collections/Categories';
 import ServiceCollection from './collections/Services';
 import BusinessCollection from './collections/Businesses';
 import MediaCollection from './collections/Media';
+import { hompageHandler } from './endpoints/homepage-handler';
 
 export default buildConfig({
 	serverURL: process.env.SERVER_URL,
@@ -17,6 +18,13 @@ export default buildConfig({
 		ServiceCollection,
 		BusinessCollection,
 		MediaCollection,
+	],
+	endpoints: [
+		{
+			method: 'get',
+			path: '/homepage',
+			handler: hompageHandler
+		}
 	],
 	cors: [ // URLS to allow CORS requests from
 		process.env.CLIENT_URL || '',
