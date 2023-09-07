@@ -1,8 +1,23 @@
-import { CollectionConfig } from 'payload/types';
+import { CollectionConfig, FieldHook } from 'payload/types';
 import { isAdmin } from '../access';
 import { fas, IconDefinition, IconName } from '@fortawesome/free-solid-svg-icons';
 import ServicesDescription from '../components/ServicesDescription';
 import payload from 'payload';
+
+const formatSlug: FieldHook = ({ data }) => {
+	// Remove leading and trailing whitespaces
+	const trimmedName = data!['plural-name'].trim();
+
+	// Normalize to remove accents
+	const normalizedString = trimmedName.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
+
+	const slug = normalizedString
+		.replace(/[^\w\s]/g, '') // Remove special characters
+		.replace(/\s+/g, '-')    // Replace spaces with hyphens
+		.toLowerCase();          // Convert to lowercase
+
+	return slug;
+}
 
 interface IconOption {
 	label: IconName,
@@ -33,7 +48,7 @@ const ServiceCollection: CollectionConfig = {
 		plural: 'Servicios'
 	},
 	admin: {
-		useAsTitle: 'name',
+		useAsTitle: 'plural-name',
 		description: ServicesDescription,
 	},
 	access: {
@@ -44,6 +59,21 @@ const ServiceCollection: CollectionConfig = {
 	},
 	fields: [
 		{
+			name: 'slug',
+			label: 'Slug',
+			type: 'text',
+			unique: true,
+			admin: {
+				position: 'sidebar',
+				readOnly: true,
+			},
+			hooks: {
+				beforeValidate: [
+					formatSlug
+				],
+			},
+		},
+		{
 			name: 'category',
 			label: 'Categoría',
 			type: 'relationship',
@@ -51,11 +81,24 @@ const ServiceCollection: CollectionConfig = {
 			required: true,
 		},
 		{
-			name: 'name',
-			label: 'Nombre',
+			name: 'plural-name',
+			label: 'Nombre en plural',
 			type: 'text',
 			required: true,
 			unique: true,
+			admin: {
+				description: 'Usado al listar los servicios de cada categoría. Por ejemplo, en la categoría "Alimentación", se listan los servicios en plural: "Cafeterías", "Panaderías", etc.',
+			},
+		},
+		{
+			name: 'singular-name',
+			label: 'Nombre en singular',
+			type: 'text',
+			required: true,
+			unique: true,
+			admin: {
+				description: 'Usado al listar los servicios que brinda una empresa. Por ejemplo, un negocio que es "Cafetería" y "Panadería", sus servicios se listan en singular.',
+			},
 		},
 		{
 			name: 'icon',
