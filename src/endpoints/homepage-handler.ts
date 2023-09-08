@@ -6,7 +6,7 @@ import BusinessCollection from "../collections/Businesses";
 /**
  * Custom route to get all the required data for the Homepage.
  */
-export const hompageHandler: PayloadHandler = async (request: Request, response: Response) => {
+export const getHompageDataHandler: PayloadHandler = async (request: Request, response: Response) => {
 	const businessModel = payload.collections[BusinessCollection.slug].Model;
 
 	const aggregationPipeline = await businessModel.aggregate([
@@ -48,7 +48,9 @@ export const hompageHandler: PayloadHandler = async (request: Request, response:
 			$project: {
 				_id: 0,
 				_serviceId: "$_id",
-				serviceName: "$service.name",
+				serviceSlug: "$service.slug",
+				servicePluralName: "$service.pluralName",
+				serviceSingularName: "$service.singularName",
 				serviceIcon: "$service.icon",
 				businessCount: "$businessCount",
 				_categoryId: { $toObjectId: "$service.category" }
@@ -61,7 +63,9 @@ export const hompageHandler: PayloadHandler = async (request: Request, response:
 				services: {
 					$push: {
 						id: "$_serviceId",
-						name: "$serviceName",
+						slug: "$serviceSlug",
+						pluralName: "$servicePluralName",
+						singularName: "$serviceSingularName",
 						icon: "$serviceIcon",
 						businessCount: "$businessCount"
 					}
@@ -85,7 +89,7 @@ export const hompageHandler: PayloadHandler = async (request: Request, response:
 				name: "$category.name",
 				displayOrder: "$category.displayOrder",
 				services: {
-					$sortArray: { input: "$services", sortBy: { name: 1 } }
+					$sortArray: { input: "$services", sortBy: { pluralName: 1 } }
 				}
 			}
 		},

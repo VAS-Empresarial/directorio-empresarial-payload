@@ -6,7 +6,7 @@ import payload from 'payload';
 
 const formatSlug: FieldHook = ({ data }) => {
 	// Remove leading and trailing whitespaces
-	const trimmedName = data!['plural-name'].trim();
+	const trimmedName = data!['pluralName'].trim();
 
 	// Normalize to remove accents
 	const normalizedString = trimmedName.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
@@ -48,7 +48,7 @@ const ServiceCollection: CollectionConfig = {
 		plural: 'Servicios'
 	},
 	admin: {
-		useAsTitle: 'plural-name',
+		useAsTitle: 'pluralName',
 		description: ServicesDescription,
 	},
 	access: {
@@ -81,7 +81,7 @@ const ServiceCollection: CollectionConfig = {
 			required: true,
 		},
 		{
-			name: 'plural-name',
+			name: 'pluralName',
 			label: 'Nombre en plural',
 			type: 'text',
 			required: true,
@@ -91,7 +91,7 @@ const ServiceCollection: CollectionConfig = {
 			},
 		},
 		{
-			name: 'singular-name',
+			name: 'singularName',
 			label: 'Nombre en singular',
 			type: 'text',
 			required: true,
