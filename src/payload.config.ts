@@ -26,9 +26,6 @@ export default buildConfig({
 			handler: getHompageDataHandler
 		}
 	],
-	cors: [ // URLS to allow CORS requests from
-		process.env.CLIENT_URL || '',
-	],
 	typescript: {
 		outputFile: path.resolve(__dirname, 'payload-types.ts'),
 	},
