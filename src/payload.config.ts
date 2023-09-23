@@ -5,7 +5,7 @@ import CategoryCollection from './collections/Categories';
 import ServiceCollection from './collections/Services';
 import BusinessCollection from './collections/Businesses';
 import MediaCollection from './collections/Media';
-import { getHompageDataHandler } from './endpoints/homepage-handler';
+import { getHompageDataHandler } from './endpoints/getHomepageDataEndpoint';
 
 export default buildConfig({
 	serverURL: process.env.SERVER_URL,

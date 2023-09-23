@@ -1,7 +1,7 @@
 import { CollectionConfig, FieldHook } from 'payload/types';
 import { isAdmin } from '../access';
 import { fas, IconDefinition, IconName } from '@fortawesome/free-solid-svg-icons';
-import ServicesDescription from '../components/ServicesDescription';
+import ServicesDescription from '../components/ServicesDescriptionComponent';
 import payload from 'payload';
 
 const formatSlug: FieldHook = ({ data }) => {
@@ -108,68 +108,16 @@ const ServiceCollection: CollectionConfig = {
 			required: true,
 		},
 	],
-	endpoints: [
-		{
-			path: "/by-category",
-			method: "get",
-			handler: async (req, res, next) => {
-				interface Category {
-					id: string,
-					name: string,
-					displayOrder: number,
-					services: Service[],
-				};
+	hooks: {
+		afterOperation: [({ args, operation, result }) => {
+			if (operation === 'find' && args.where?.['slug']) {
+				// If this is requested by the FE, return only the filtered service
+				return result.docs[0];
+			}
 
-				interface Service {
-					id: string,
-					name: string,
-					icon: string,
-					category?: Category,
-				}
-
-				const servicesData = await payload.find({
-					collection: "services",
-					//depth: 2,
-					page: 1,
-					limit: 0,
-					//where: {}, // pass a `where` query here
-					sort: "name",
-				});
-
-				if (!servicesData) {
-					res.status(404).send({ error: "not found" });
-					return;
-				}
-
-				const categoryMap = new Map<string, Category>();
-				for (const service of servicesData.docs as Service[]) {
-					const categoryId = service.category!.id;
-					let category = categoryMap.get(categoryId);
-
-					if (!category) {
-						category = {
-							id: service.category!.id,
-							name: service.category!.name,
-							displayOrder: service.category!.displayOrder,
-							services: []
-						};
-						categoryMap.set(categoryId, category);
-					}
-
-					category.services.push({
-						id: service.id,
-						name: service.name,
-						icon: service.icon,
-					});
-				}
-
-				const categoriesWithServices: Category[] = Array.from(categoryMap.values())
-					.sort((a, b) => a.name.localeCompare(b.name));
-
-				res.status(200).send(categoriesWithServices);
-			},
-		},
-	],
+			return result; // return modified result as necessary
+		}],
+	},
 };
 
 export default ServiceCollection;

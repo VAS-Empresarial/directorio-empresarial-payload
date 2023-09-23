@@ -94,6 +94,16 @@ const BusinessCollection: CollectionConfig = {
 			defaultValue: true,
 		},
 	],
+	hooks: {
+		afterOperation: [({ args, operation, result }) => {
+			if (operation === 'find' && args.where?.['services.slug']) {
+				// If this is requested by the FE, return only the docs
+				return result.docs;
+			}
+
+			return result; // return modified result as necessary
+		}],
+	},
 };
 
 function validateURL(link: string): true | string {
