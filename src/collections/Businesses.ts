@@ -70,8 +70,7 @@ const BusinessCollection: CollectionConfig = {
 				{
 					name: 'whatsApp',
 					label: 'WhatsApp',
-					type: 'text',
-					validate: validateURL,
+					type: 'number',
 				},
 				{
 					name: 'facebook',
