@@ -36,7 +36,7 @@ const BusinessCollection: CollectionConfig = {
 		{
 			name: 'description',
 			label: 'Descripción',
-			type: 'text',
+			type: 'textarea',
 		},
 		{
 			name: 'services',
