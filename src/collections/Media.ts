@@ -32,6 +32,7 @@ const MediaCollection: CollectionConfig = {
 		],
 		adminThumbnail: 'thumbnail',
 		mimeTypes: ['image/*'],
+		disableLocalStorage: true,
 	},
 	fields: [],
 };
